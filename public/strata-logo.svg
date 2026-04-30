@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">Strata logo</title>
+  <desc id="desc">Layered Strata scanner mark</desc>
+  <rect width="128" height="128" rx="28" fill="#004270"/>
+  <path d="M28 81h72c3.3 0 6 2.7 6 6v6c0 3.3-2.7 6-6 6H28c-3.3 0-6-2.7-6-6v-6c0-3.3 2.7-6 6-6Z" fill="#ffffff"/>
+  <path d="M28 57h72c3.3 0 6 2.7 6 6v6c0 3.3-2.7 6-6 6H28c-3.3 0-6-2.7-6-6v-6c0-3.3 2.7-6 6-6Z" fill="#77A538"/>
+  <path d="M28 33h48c3.3 0 6 2.7 6 6v6c0 3.3-2.7 6-6 6H28c-3.3 0-6-2.7-6-6v-6c0-3.3 2.7-6 6-6Z" fill="#ffffff" opacity=".72"/>
+  <path d="M92 30h17v17M109 30 82 57" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

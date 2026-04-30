@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    min-height: 100%;
+    background: #f4f7f5;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
+
+  body {
+    font-family: var(--font-body);
+    color: #363334;
+    min-height: 100%;
+    background:
+      radial-gradient(circle at top left, rgba(119, 165, 56, 0.12), transparent 30rem),
+      linear-gradient(180deg, #f8faf8 0%, #eef4f5 100%);
+  }
+
+  button, input, textarea, select {
+    font: inherit;
+  }
+
+  ::selection {
+    background: rgba(119, 165, 56, 0.28);
+    color: #003258;
+  }
+}
+
+/* Thin scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #edf3f1; }
+::-webkit-scrollbar-thumb { background: #98a6ad; border-radius: 999px; border: 2px solid #edf3f1; }
+::-webkit-scrollbar-thumb:hover { background: #004270; }
+
+/* Loading shimmer */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer {
+  background: linear-gradient(90deg, #eef2f2 25%, #dfe8e7 50%, #eef2f2 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Drag-over highlight */
+.drag-over {
+  border-color: #004270 !important;
+  background-color: #edf7f3 !important;
+}
