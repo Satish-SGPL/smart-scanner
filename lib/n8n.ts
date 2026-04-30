@@ -16,9 +16,9 @@ export async function scanBusinessCard(
   if (!webhookUrl) throw new Error('N8N_WEBHOOK_URL is not configured')
 
   const formData = new FormData()
-  formData.append('front_image', new Blob([frontImageBuffer], { type: 'image/jpeg' }), 'front.jpg')
+  formData.append('front_image', new Blob([new Uint8Array(frontImageBuffer)], { type: 'image/jpeg' }), 'front.jpg')
   if (backImageBuffer) {
-    formData.append('back_image', new Blob([backImageBuffer], { type: 'image/jpeg' }), 'back.jpg')
+    formData.append('back_image', new Blob([new Uint8Array(backImageBuffer)], { type: 'image/jpeg' }), 'back.jpg')
   }
 
   const response = await fetch(webhookUrl, { method: 'POST', body: formData })
