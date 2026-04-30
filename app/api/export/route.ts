@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
 
   const buffer = await workbook.xlsx.writeBuffer()
 
-  return new NextResponse(buffer as Buffer, {
+  return new NextResponse(new Uint8Array(buffer as ArrayBuffer), {
     headers: {
       'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       'Content-Disposition': `attachment; filename="strata-leads-${Date.now()}.xlsx"`,
