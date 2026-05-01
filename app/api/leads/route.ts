@@ -2,9 +2,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { db } from '@/lib/db'
-import { leads } from '@/lib/db/schema'
+import { leads, events } from '@/lib/db/schema'
 import { eq, desc, ilike, and, or, sql } from 'drizzle-orm'
 import { generateId, normalizeEmail, normalizePhone, sanitizeInput } from '@/lib/utils'
+import { syncLeadToSheets } from '@/lib/sheets-sync'
 
 export async function GET(request: NextRequest) {
   const session = await getServerSession(authOptions)
@@ -88,11 +89,36 @@ export async function POST(request: NextRequest) {
 
     await db.insert(leads).values(newLead)
 
+    let eventName = ''
     if (newLead.eventId !== 'general') {
+      const [eventRow] = await db
+        .select({ name: events.name })
+        .from(events)
+        .where(eq(events.id, newLead.eventId))
+        .limit(1)
+      eventName = eventRow?.name || ''
+
       await db.execute(
         sql`UPDATE events SET lead_count = lead_count + 1, updated_at = NOW() WHERE id = ${newLead.eventId}`
       )
     }
+
+    // Fire-and-forget Google Sheets sync — does not block the response
+    syncLeadToSheets({
+      scannedAt: newLead.scannedAt.toISOString(),
+      name: newLead.name,
+      company: newLead.company,
+      designation: newLead.designation,
+      email: newLead.email,
+      phone: newLead.phone,
+      website: newLead.website,
+      address: newLead.address,
+      leadType: newLead.leadType,
+      eventName,
+      salesComments: newLead.salesComments,
+      savedBy: newLead.savedBy,
+      savedByEmail: newLead.savedByEmail,
+    })
 
     return NextResponse.json(newLead, { status: 201 })
   } catch (error) {
